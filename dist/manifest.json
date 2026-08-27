@@ -1,0 +1,10 @@
+{
+    "id": "fsync",
+    "name": "Fsync",
+    "version": "0.1.0",
+    "minAppVersion": "1.7.2",
+    "description": "Vault sync and sharing for Obsidian, backed by your own Fsync server. One dialog, no setup.",
+    "author": "Foldoy",
+    "authorUrl": "https://notes.foldoy.com",
+    "isDesktopOnly": false
+}
