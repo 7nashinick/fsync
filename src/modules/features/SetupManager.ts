@@ -23,7 +23,6 @@ import ApplySettingsInitialisation from "./SetupWizard/dialogs/ApplySettingsInit
 import SetupRemote from "./SetupWizard/dialogs/SetupRemote.svelte";
 import SetupRemoteCouchDB from "./SetupWizard/dialogs/SetupRemoteCouchDB.svelte";
 import SetupRemoteBucket from "./SetupWizard/dialogs/SetupRemoteBucket.svelte";
-import SetupRemoteP2P from "./SetupWizard/dialogs/SetupRemoteP2P.svelte";
 import SetupRemoteE2EE from "./SetupWizard/dialogs/SetupRemoteE2EE.svelte";
 import { decodeSettingsFromQRCodeData } from "@vrtmrz/livesync-commonlib/compat/API/processSetting";
 import { AbstractModule } from "@/modules/AbstractModule.ts";
@@ -280,10 +279,8 @@ export class SetupManager extends AbstractModule {
         currentSetting: ObsidianLiveSyncSettings,
         activate = true
     ): Promise<boolean> {
-        const p2pConf = await this.dialogManager.openWithExplicitCancel<SetupRemoteP2PResultType, P2PSyncSetting>(
-            SetupRemoteP2P,
-            currentSetting
-        );
+        // Fsync: P2P setup stripped; treat as cancelled.
+        const p2pConf = "cancelled" as SetupRemoteP2PResultType | "cancelled";
         if (p2pConf === "cancelled") {
             this._log("Manual configuration cancelled.", LOG_LEVEL_NOTICE);
             return await this.onOnboard(userMode);

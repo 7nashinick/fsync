@@ -54,8 +54,6 @@ import {
     type UpdateFunction,
 } from "./SettingPane.ts";
 import { compatGlobal } from "@vrtmrz/livesync-commonlib/compat/common/coreEnvFunctions";
-import { JournalSyncCore } from "@vrtmrz/livesync-commonlib/compat/replication/journal/JournalSyncCore";
-import { MinioStorageAdapter } from "@vrtmrz/livesync-commonlib/compat/replication/journal/objectstore/MinioStorageAdapter";
 import { closeObsidianSettings } from "@/common/obsidianSettings.ts";
 import {
     createAdvancedSettingDefinitionGroups,
@@ -1189,15 +1187,9 @@ export class ObsidianLiveSyncSettingTab extends PluginSettingTab {
         });
     }
 
-    getMinioJournalSyncClient() {
-        // return new JournalSyncMinio(this.core.settings, this.core.simpleStore, this.core);
-        // const settings = this.editingSettings as ObsidianLiveSyncSettings;
-        return new JournalSyncCore(
-            this.core.settings,
-            this.core.simpleStore,
-            this.core,
-            new MinioStorageAdapter(this.core.settings, this.core)
-        );
+    getMinioJournalSyncClient(): never {
+        // Fsync: object-storage (S3/MinIO) sync is stripped.
+        throw new Error("Object-storage sync is not part of Fsync.");
     }
     async resetRemoteBucket() {
         const minioJournal = this.getMinioJournalSyncClient();
